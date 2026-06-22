@@ -28,7 +28,7 @@
       "active": true,
       "dialog": true,
       "endpoints": [
-        "https://github.com/mortyyy/weavify/releases/latest/download/update-{{target}}-{{arch}}.json"
+        "https://github.com/vans12byvans-hue/weavifyy/releases/latest/download/update-{{target}}-{{arch}}.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDMzRDBGNjM3MDM4M0JENzEKUldSeHZZTUROL2JRTS9qdEkvaTVZcTIyck8vWFFmSkNtZE16NGdBek1jV1Z1cXlrQWVZRkpXL2kK"
     }
