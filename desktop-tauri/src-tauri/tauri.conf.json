@@ -1,0 +1,47 @@
+{
+  "productName": "Weavify",
+  "version": "8.0.0",
+  "identifier": "com.weavify.app",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Weavify",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 1200,
+        "minHeight": 700,
+        "decorations": false,
+        "resizable": true,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' tauri: http://tauri.localhost; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: http: asset: http://asset.localhost; media-src 'self' data: https: http: blob: asset: http://asset.localhost; connect-src 'self' https: http: ws: wss: ipc: http://ipc.localhost;"
+    }
+  },
+  "plugins": {
+    "updater": {
+      "active": true,
+      "dialog": true,
+      "endpoints": [
+        "https://github.com/mortyyy/weavify/releases/latest/download/update-{{target}}-{{arch}}.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDMzRDBGNjM3MDM4M0JENzEKUldSeHZZTUROL2JRTS9qdEkvaTVZcTIyck8vWFFmSkNtZE16NGdBek1jV1Z1cXlrQWVZRkpXL2kK"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

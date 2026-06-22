@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Лианая тупая дура</title>
+  <script src="tauri-api.js"></script>
+  <script src="security.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="auth-modern.css">
+  <link rel="stylesheet" href="wave-animation-new.css">
+  <link rel="stylesheet" href="loading-screen.css">
+  <link rel="stylesheet" href="artist-page.css">
+  <link rel="stylesheet" href="customization.css">
+  <link rel="stylesheet" href="stars-animation.css">
+  <!-- <link rel="stylesheet" href="dotify-complete.css"> -->
+  <!-- <link rel="stylesheet" href="dotify-final.css"> -->
+  <!-- <link rel="stylesheet" href="dotify-style.css"> -->
+  <link rel="stylesheet" href="servers-styles.css">
+  <link rel="stylesheet" href="playlists-library.css">
+  <link rel="stylesheet" href="modal.css">
+  <link rel="stylesheet" href="glassmorphism.css">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script async src="https://telegram.org/js/telegram-widget.js?22"></script>
+  <script src="services/track-converter.js"></script>
+</head>
+<body>
+  <!-- Video Background - контейнер для кастомного фона -->
+  <div id="video-background" class="hidden"></div>
+
+  <!-- Auth Screen - ВРЕМЕННО СКРЫТ -->
+  <div id="auth-screen" class="auth-screen" style="display: none;">
+    <div class="auth-container">
+      <!-- Logo Section -->
+      <div class="auth-logo">
+        <img src="assets/icon.png" alt="Wavify Logo" width="80" height="80" style="border-radius: 20px; margin-bottom: 16px;">
+        <h1 class="auth-title">ЛИАНА ДУРА</h1>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login-form" class="auth-form">
+        <button class="auth-btn-white" id="show-login-fields">Есть похуже...</button>
+        <button class="auth-btn-transparent" id="show-register">Дать сиськи потрогать?</button>
+        <a href="#" class="auth-link-small" id="forgot-password">Хотите?</a>
+      </div>
+
+      <!-- Login Fields Form -->
+      <div id="login-fields-form" class="auth-form" style="display: none;">
+        <h2 class="auth-form-title">С возвращением!</h2>
+        <p class="auth-form-subtitle">Введите свои данные для входа в аккаунт</p>
+        
+        <div class="input-group-simple">
+          <input type="text" id="login-username" placeholder="Логин или почта" class="auth-input-simple">
+        </div>
+        
+        <div class="input-group-simple">
+          <input type="password" id="login-password" placeholder="Пароль" class="auth-input-simple">
+          <button class="input-toggle-password" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        
+        <a href="#" class="auth-link-small-left">Забыли пароль?</a>
+        
+        <div id="login-error" class="auth-error"></div>
+        
+        <button id="login-btn" class="auth-btn-gray">
+          <span>Войти</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+        
+        <div class="auth-social-buttons">
+          <button class="auth-social-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            <span>Google</span>
+          </button>
+          <button class="auth-social-btn" id="telegram-login-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.752-.244-1.349-.374-1.297-.789.027-.216.324-.437.892-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.141.121.099.155.232.171.326.016.094.036.308.02.475z"/>
+            </svg>
+            <span>Telegram</span>
+          </button>
+        </div>
+        <div id="telegram-auth-status" class="auth-status-message"></div>
+        
+        <p class="auth-switch">
+          Еще нет аккаунта? <a href="#" id="show-register-from-login">Создать аккаунт</a>
+        </p>
+        
+        <button class="auth-btn-back" id="back-to-main">Назад</button>
+      </div>
+
+      <!-- Register Form - Step 1: Email -->
+      <div id="register-form" class="auth-form" style="display: none;">
+        <h2 class="auth-form-title">Давай начнем с почты</h2>
+        <div class="auth-progress-bar">
+          <div class="auth-progress-fill" id="register-progress" style="width: 33%"></div>
+        </div>
+        
+        <div class="input-group-simple">
+          <input type="email" id="register-email" placeholder="Твоя почта" class="auth-input-simple">
+        </div>
+        
+        <div id="register-error" class="auth-error"></div>
+        
+        <button id="register-next-btn" class="auth-btn-gray">Далее</button>
+        
+        <button class="auth-btn-back" id="back-to-main-from-register">Назад</button>
+      </div>
+
+      <!-- Register Form - Step 2: Password -->
+      <div id="register-form-step2" class="auth-form" style="display: none;">
+        <h2 class="auth-form-title">Создай пароль</h2>
+        <div class="auth-progress-bar">
+          <div class="auth-progress-fill" style="width: 66%"></div>
+        </div>
+        
+        <div class="input-group-simple">
+          <input type="password" id="register-password" placeholder="Пароль" class="auth-input-simple">
+        </div>
+        
+        <div class="input-group-simple">
+          <input type="password" id="register-password-confirm" placeholder="Повтори пароль" class="auth-input-simple">
+        </div>
+        
+        <div id="register-error-step2" class="auth-error"></div>
+        
+        <button id="register-next-btn-step2" class="auth-btn-gray">Далее</button>
+        
+        <button class="auth-btn-back" id="back-to-step1">Назад</button>
+      </div>
+
+      <!-- Register Form - Step 3: Username -->
+      <div id="register-form-step3" class="auth-form" style="display: none;">
+        <h2 class="auth-form-title">Как тебя зовут?</h2>
+        <div class="auth-progress-bar">
+          <div class="auth-progress-fill" style="width: 100%"></div>
+        </div>
+        
+        <div class="input-group-simple">
+          <input type="text" id="register-username" placeholder="Твой ник" class="auth-input-simple">
+        </div>
+        
+        <div id="register-error-step3" class="auth-error"></div>
+        
+        <button id="register-btn" class="auth-btn-gray">Создать аккаунт</button>
+        
+        <button class="auth-btn-back" id="back-to-step2">Назад</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App - ВРЕМЕННО ПОКАЗАН ПО УМОЛЧАНИЮ -->
+  <div id="main-app" style="display: block;">
+  <!-- Titlebar -->
+  <div class="titlebar">
+    <div class="titlebar-drag">
+      <div class="titlebar-logo">
+        <img src="assets/icon.png" alt="Weavify" width="20" height="20" style="border-radius: 4px;">
+      </div>
+      <span>Weavify</span>
+    </div>
+    <div class="titlebar-controls">
+      <button id="update-btn" class="titlebar-update-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+        </svg>
+        <span>Обновить</span>
+      </button>
+      <button id="pin-btn" class="titlebar-icon-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/>
+        </svg>
+      </button>
+      <button id="min-btn" class="titlebar-icon-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 13H5v-2h14v2z"/>
+        </svg>
+      </button>
+      <button id="max-btn" class="titlebar-icon-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M5 5h14v14H5V5m2 2v10h10V7H7z"/>
+        </svg>
+      </button>
+      <button id="close-btn" class="titlebar-icon-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar - Minimal Icon-Only -->
+    <aside class="sidebar">
+      <!-- Top Section -->
+      <div class="sidebar-section">
+        <button class="sidebar-btn active" data-page="home" title="Домой">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </button>
+        <button class="sidebar-btn" data-page="search" title="Поиск">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+        <button class="sidebar-btn" data-page="playlist" title="Плейлисты">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Music Services -->
+      <div class="sidebar-section">
+        <button class="sidebar-btn source-btn active" data-source="yandex" title="Яндекс Музыка">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="4" fill="#FFCC00"/>
+            <path d="M13.5 6H10v12h2v-4.5h1.5c2.21 0 4-1.79 4-4s-1.79-3.5-4-3.5zm0 5.5H12V8.5h1.5c1.1 0 2 .9 2 2s-.9 1.5-2 1.5z" fill="#000"/>
+          </svg>
+        </button>
+        <button class="sidebar-btn source-btn" data-source="youtube" title="YouTube Music">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF0000">
+            <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/>
+          </svg>
+        </button>
+        <button class="sidebar-btn source-btn" data-source="spotify" title="Spotify">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="12" fill="#1DB954"/>
+            <path d="M17.5 10.5c-3.2-1.9-8.5-2.1-11.6-1.2-.5.2-.8-.1-1-.5-.2-.5.1-.8.5-1 3.6-1 9.4-.8 13 1.4.4.2.5.7.3 1.1-.2.3-.7.4-1.2.2zm-.1 2.8c-.2.3-.6.4-.9.2-2.7-1.7-6.8-2.1-10-1.2-.4.1-.8-.1-.9-.5-.1-.4.1-.8.5-.9 3.6-1 8.1-.5 11.2 1.3.3.2.4.7.1 1.1zm-1 2.7c-.2.2-.5.3-.7.2-2.4-1.5-5.4-1.8-9-1-.3.1-.6-.1-.7-.4-.1-.3.1-.6.4-.7 4-.9 7.3-.5 9.9 1.1.3.1.3.5.1.8z" fill="#fff"/>
+          </svg>
+        </button>
+        <button class="sidebar-btn source-btn" data-source="soundcloud" title="SoundCloud">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="4" fill="#FF5500"/>
+            <path d="M5 13.5l.5 2-.5 2c0 .3-.2.5-.5.5s-.5-.2-.5-.5l-.4-2 .4-2c0-.3.2-.5.5-.5s.5.2.5.5zm1.5-1l.5 3-.5 3c0 .3-.2.5-.5.5s-.5-.2-.5-.5l-.4-3 .4-3c0-.3.2-.5.5-.5s.5.2.5.5zm1.5-.5l.5 3.5-.5 3.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5l-.4-3.5.4-3.5c0-.3.2-.5.5-.5s.5.2.5.5zm1.5 0l.5 3.5-.5 3.5c0 .3-.3.5-.5.5-.3 0-.5-.2-.5-.5l-.5-3.5.5-3.5c0-.3.2-.5.5-.5.2 0 .5.2.5.5zm1.5-1.5l.5 5-.5 5c0 .4-.3.6-.6.6-.3 0-.6-.2-.6-.6l-.4-5 .4-5c0-.4.3-.6.6-.6.3 0 .6.2.6.6zm1.5.5l.5 4.5-.5 4.5c0 .4-.3.7-.7.7-.3 0-.6-.3-.6-.7l-.4-4.5.4-4.5c0-.4.3-.7.6-.7.4 0 .7.3.7.7zm1.5-2l.5 6.5-.5 6.5c0 .4-.3.8-.8.8-.4 0-.7-.4-.7-.8l-.5-6.5.5-6.5c0-.4.3-.8.7-.8.5 0 .8.4.8.8zm5 1c-1.7 0-3.2 1.2-3.5 2.8v6.4c0 .4.3.8.8.8h6.4c1.5 0 2.8-1.3 2.8-2.8 0-1.5-1.3-2.8-2.8-2.8-.4 0-.7.1-1 .2-.2-2.5-2.3-4.6-4.7-4.6z" fill="#fff"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Bottom buttons -->
+      <div class="sidebar-section">
+        <button class="sidebar-btn" data-page="servers" title="Серверы">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,13H4c-0.55,0-1,0.45-1,1v6c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1v-6C21,13.45,20.55,13,20,13z M19,19h-2v-4h2V19z M20,3H4C3.45,3,3,3.45,3,4v6c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1V4C21,3.45,20.55,3,20,3z M19,9h-2V5h2V9z"/>
+          </svg>
+        </button>
+        <button class="sidebar-btn" data-page="settings" title="Настройки">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+          </svg>
+        </button>
+        <button class="sidebar-btn" data-page="profile" title="Профиль">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Content Wrapper with gap -->
+    <div class="content-wrapper">
+    <main class="main-content">
+      <!-- Home Page -->
+      <div class="page active" id="home-page">
+        <!-- Моя волна - строка с play и анимацией -->
+        <div class="wave-hero-compact paused" id="my-wave-card">
+          <!-- Анимированные волны (показываются при воспроизведении) -->
+          <div class="wave-visualizer" id="wave-visualizer">
+            <svg class="wave-svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+              <path class="wave-path wave-path-1" d="M0,50 Q250,30 500,50 T1000,50" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+              <path class="wave-path wave-path-2" d="M0,50 Q250,70 500,50 T1000,50" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+              <path class="wave-path wave-path-3" d="M0,50 Q250,50 500,50 T1000,50" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2"/>
+            </svg>
+          </div>
+          
+          <!-- Кнопка play по центру -->
+          <button class="wave-play-btn" id="wave-play-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </button>
+          
+          <h2 class="wave-title">Моя волна</h2>
+          
+          <button class="wave-shuffle-btn" id="wave-shuffle-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Чарт -->
+        <section class="section">
+          <div class="section-header">
+            <h2>ЧАРТ</h2>
+            <button class="play-all-btn glass-btn" id="play-chart-btn" title="Воспроизвести чарт" style="margin-left: auto; margin-right: 8px;">
+              ▶ Играть
+            </button>
+          </div>
+          <div class="horizontal-carousel" id="yandex-chart-carousel"></div>
+        </section>
+
+        <!-- Нижняя секция: История -->
+        <div class="home-bottom-grid">
+          <!-- История -->
+          <section class="section section-compact">
+            <div class="section-header">
+              <h2>История</h2>
+            </div>
+            <div class="horizontal-carousel carousel-compact" id="history-carousel"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Search Page -->
+      <div class="page" id="search-page">
+        <div class="search-header">
+          <input type="text" class="search-input" placeholder="Что включить?" id="search-input">
+          <div class="search-filters">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="tracks">Треки</button>
+            <button class="filter-btn" data-filter="albums">Альбомы</button>
+            <button class="filter-btn" data-filter="artists">Артисты</button>
+            <button class="filter-btn" data-filter="lyrics">По тексту</button>
+          </div>
+        </div>
+        <div class="search-results" id="search-results"></div>
+      </div>
+
+      <!-- Artist Page (Individual Artist) -->
+      <div class="page" id="artist-page">
+        <div id="artist-header">
+          <!-- Artist header will be rendered here -->
+        </div>
+        <div id="artist-tracks-container">
+          <!-- Artist tracks will be rendered here -->
+        </div>
+      </div>
+
+      <!-- Artists Page -->
+      <div class="page" id="artists-page">
+        <h2>Исполнители</h2>
+        <div class="artists-grid" id="artists-grid"></div>
+        
+        <!-- Artist Detail View (hidden by default) -->
+        <div class="artist-detail" id="artist-detail" style="display: none;">
+          <button class="back-btn" id="back-to-artists">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Назад
+          </button>
+          <div class="artist-header">
+            <div class="artist-avatar" id="artist-avatar">♪</div>
+            <div class="artist-info">
+              <h1 id="artist-name">Artist Name</h1>
+              <p id="artist-stats">0 треков</p>
+            </div>
+          </div>
+          <div class="artist-tracks" id="artist-tracks"></div>
+        </div>
+      </div>
+
+      <!-- Playlist Library Page -->
+      <div class="page" id="playlist-page">
+        <div class="playlist-library-container">
+          <!-- Left Sidebar with Playlists - Wide with text -->
+          <aside class="playlists-sidebar">
+            <div class="playlists-sidebar-section">
+              <div class="playlists-sidebar-header">
+                <h3>Системные</h3>
+                <button class="refresh-btn" title="Обновить">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <div class="system-playlists">
+                <div class="sidebar-playlist-item" data-playlist="favorites">
+                  <div class="sidebar-playlist-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                  </div>
+                  <div class="sidebar-playlist-info">
+                    <span class="sidebar-playlist-name">Любимые</span>
+                    <span class="sidebar-playlist-count">Нет треков</span>
+                  </div>
+                </div>
+                
+                <div class="sidebar-playlist-item" data-playlist="offline">
+                  <div class="sidebar-playlist-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45C23.16 18.16 24 16.68 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.15 0 10.77 0 14c0 3.31 2.69 6 6 6h11.73l2 2L21 20.73 4.27 4 3 5.27zM7.73 10l8 8H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h1.73z"/>
+                    </svg>
+                  </div>
+                  <div class="sidebar-playlist-info">
+                    <span class="sidebar-playlist-name">Оффлайн треки</span>
+                    <span class="sidebar-playlist-count">Нет треков</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="playlists-sidebar-section">
+              <div class="playlists-sidebar-header">
+                <h3>Плейлисты</h3>
+                <button class="add-playlist-btn" title="Создать плейлист">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <div class="user-playlists" id="sidebar-user-playlists">
+                <div class="sidebar-playlist-item active" data-playlist="main">
+                  <div class="sidebar-playlist-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+                    </svg>
+                  </div>
+                  <div class="sidebar-playlist-info">
+                    <span class="sidebar-playlist-name">Мой плейлист</span>
+                    <span class="sidebar-playlist-count" id="main-playlist-count">0 треков</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+          
+          <!-- Content Area -->
+          <div class="playlist-content-area">
+            <div class="playlist-content-header">
+              <div class="playlist-content-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45C23.16 18.16 24 16.68 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.15 0 10.77 0 14c0 3.31 2.69 6 6 6h11.73l2 2L21 20.73 4.27 4 3 5.27zM7.73 10l8 8H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h1.73z"/>
+                </svg>
+              </div>
+              <div class="playlist-title-section">
+                <h1 id="playlist-content-title" class="editable-title" contenteditable="false">Оффлайн треки</h1>
+                <button class="btn-icon-small edit-title-btn" id="edit-title-btn" title="Переименовать плейлист">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Playlist Controls -->
+            <div class="playlist-controls" id="playlist-controls" style="display: none;">
+              <div class="playlist-controls-left">
+                <button class="btn-primary play-all-btn" id="play-all-btn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                  Воспроизвести все
+                </button>
+                <button class="btn-secondary shuffle-all-btn" id="shuffle-all-btn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+                  </svg>
+                  Перемешать
+                </button>
+              </div>
+              <div class="playlist-controls-right">
+                <div class="search-container">
+                  <input type="text" class="playlist-search-input" id="playlist-search-input" placeholder="Поиск по плейлисту...">
+                  <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                  </svg>
+                </div>
+                <select class="playlist-sort-select" id="playlist-sort-select">
+                  <option value="default">По умолчанию</option>
+                  <option value="title">По названию</option>
+                  <option value="artist">По исполнителю</option>
+                  <option value="duration">По длительности</option>
+                  <option value="date">По дате добавления</option>
+                </select>
+                <button class="btn-secondary find-duplicates-btn" id="find-duplicates-btn" title="Найти дубликаты">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                  </svg>
+                </button>
+                <button class="btn-secondary help-btn" id="help-btn" title="Горячие клавиши">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Duplicate Controls -->
+            <div class="duplicate-controls" id="duplicate-controls">
+              <div class="duplicate-info">
+                <span id="duplicate-count">0</span> дубликатов найдено
+              </div>
+              <div class="duplicate-actions">
+                <button class="btn-small btn-warning" id="remove-duplicates-btn">Удалить все дубликаты</button>
+                <button class="btn-small btn-outline" id="hide-duplicates-btn">Скрыть</button>
+              </div>
+            </div>
+            
+            <!-- Playlist Statistics -->
+            <div class="playlist-stats" id="playlist-stats" style="display: none;">
+              <div class="stat-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <span id="total-tracks">0 треков</span>
+              </div>
+              <div class="stat-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zM12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                </svg>
+                <span id="total-duration">0:00</span>
+              </div>
+              <div class="stat-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7H3v2h2v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h2V4zm-4 15H7V6h10v13z"/>
+                </svg>
+                <span id="storage-size">0 MB</span>
+              </div>
+            </div>
+            
+            <!-- Scrollable Container -->
+            <div class="track-list-container">
+              <div class="playlist-empty-state" id="playlist-empty-state">
+                <div class="empty-state-icon">
+                  <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" opacity="0.3">
+                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45C23.16 18.16 24 16.68 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.15 0 10.77 0 14c0 3.31 2.69 6 6 6h11.73l2 2L21 20.73 4.27 4 3 5.27zM7.73 10l8 8H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h1.73z"/>
+                  </svg>
+                </div>
+                <p class="empty-state-text">Добавьте первый трек</p>
+                <p class="empty-state-subtext">У вас еще нет тут треков</p>
+                <button class="btn-add-local-track">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                  </svg>
+                  Добавить локальный трек
+                </button>
+              </div>
+              
+              <div class="track-list" id="playlist-content-tracks" style="display: none;">
+                <!-- Track List Header -->
+                <div class="track-list-header">
+                  <div class="track-header-number">#</div>
+                  <div class="track-header-title">НАЗВАНИЕ</div>
+                  <div class="track-header-duration">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
+                    </svg>
+                  </div>
+                  <div class="track-header-actions"></div>
+                </div>
+                <!-- Tracks will be displayed here -->
+              </div>
+            </div>
+            
+            <!-- Context Menu -->
+            <div class="context-menu" id="track-context-menu">
+              <div class="context-menu-item" data-action="play">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                Воспроизвести
+              </div>
+              <div class="context-menu-item" data-action="add-to-favorites">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                Добавить в избранное
+              </div>
+              <div class="context-menu-separator"></div>
+              <div class="context-menu-item" data-action="copy-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                </svg>
+                Копировать название
+              </div>
+              <div class="context-menu-item" data-action="show-info">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                Информация о треке
+              </div>
+              <div class="context-menu-separator"></div>
+              <div class="context-menu-item danger" data-action="remove">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                Удалить из плейлиста
+              </div>
+            </div>
+            
+            <!-- Keyboard Shortcuts Help -->
+            <div class="keyboard-shortcuts" id="keyboard-shortcuts">
+              <h4 style="margin: 0 0 12px 0; color: white;">Горячие клавиши</h4>
+              <div class="shortcut-item">
+                <span>Поиск</span>
+                <span class="shortcut-key">Ctrl+F</span>
+              </div>
+              <div class="shortcut-item">
+                <span>Выбрать все</span>
+                <span class="shortcut-key">Ctrl+A</span>
+              </div>
+              <div class="shortcut-item">
+                <span>Воспроизвести</span>
+                <span class="shortcut-key">Enter</span>
+              </div>
+              <div class="shortcut-item">
+                <span>Удалить</span>
+                <span class="shortcut-key">Delete</span>
+              </div>
+              <div class="shortcut-item">
+                <span>Очистить поиск</span>
+                <span class="shortcut-key">Esc</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Servers Page -->
+      <div class="page" id="servers-page">
+        <h2>Управление серверами</h2>
+        
+        <div class="servers-grid">
+        <!-- Local Server Card -->
+        <div class="server-card">
+          <div class="server-header">
+            <div class="server-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20,13H4c-0.55,0-1,0.45-1,1v6c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1v-6C21,13.45,20.55,13,20,13z M19,19h-2v-4h2V19z M20,3H4C3.45,3,3,3.45,3,4v6c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1V4C21,3.45,20.55,3,20,3z M19,9h-2V5h2V9z"/>
+              </svg>
+            </div>
+            <div class="server-title-section">
+              <h3 class="server-title">Локальный сервер</h3>
+              <p class="server-subtitle">Встроенный сервер для синхронизации и работы с музыкой</p>
+            </div>
+            <div class="server-status-badge" id="local-server-badge">
+              <span class="status-dot"></span>
+              <span class="status-text">Проверка...</span>
+            </div>
+          </div>
+
+          <div class="server-body">
+            <!-- Toggle Section -->
+            <div class="server-option">
+              <div class="option-info">
+                <div class="option-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                </div>
+                <div class="option-text">
+                  <div class="option-title">Автозапуск сервера</div>
+                  <div class="option-description">Запускать локальный сервер при старте приложения</div>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="autostart-server-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <!-- Server Info -->
+            <div class="server-info-section" id="local-server-info" style="display: none;">
+              <div class="info-row">
+                <span class="info-label">Backend API:</span>
+                <code class="info-value">http://localhost:3001</code>
+              </div>
+              <div class="info-row">
+                <span class="info-label">YouTube Server:</span>
+                <code class="info-value">http://localhost:3003</code>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Статус:</span>
+                <span class="info-value" id="local-server-status-text">Активен</span>
+              </div>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="server-controls">
+              <button id="start-local-server-btn" class="server-btn server-btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                Запустить
+              </button>
+              <button id="stop-local-server-btn" class="server-btn server-btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="6" width="12" height="12"/>
+                </svg>
+                Остановить
+              </button>
+              <button id="restart-local-server-btn" class="server-btn server-btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                </svg>
+                Перезапустить
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Discord RPC Card -->
+        <div class="server-card">
+          <div class="server-header">
+            <div class="server-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+            </div>
+            <div class="server-title-section">
+              <h3 class="server-title">Discord RPC</h3>
+              <p class="server-subtitle">Интеграция статуса с Discord</p>
+            </div>
+            <div class="server-status-badge" id="discord-rpc-badge">
+              <span class="status-dot status-active"></span>
+              <span class="status-text">Подключен</span>
+            </div>
+          </div>
+
+          <div class="server-body">
+            <!-- Toggle Section -->
+            <div class="server-option">
+              <div class="option-info">
+                <div class="option-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                </div>
+                <div class="option-text">
+                  <div class="option-title">Активность в Discord</div>
+                  <div class="option-description">Показывать в Discord, что вы слушаете</div>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="discord-activity-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="server-option">
+              <div class="option-info">
+                <div class="option-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/>
+                  </svg>
+                </div>
+                <div class="option-text">
+                  <div class="option-title">Прогресс воспроизведения</div>
+                  <div class="option-description">Показывать время воспроизведения и длительность</div>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="discord-progress-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <!-- Info Section -->
+            <div class="server-info-box">
+              <div class="info-box-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span>О функции Rich Presence</span>
+              </div>
+              <div class="info-box-content">
+                <p>Discord Rich Presence позволяет показывать в вашем профиле Discord информацию о том, какую музыку вы сейчас слушаете.</p>
+                <ul>
+                  <li>Название трека</li>
+                  <li>Исполнитель</li>
+                  <li>Источник (YouTube, Яндекс Музыка и т.д.)</li>
+                  <li>Время воспроизведения</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telegram Bot Card -->
+        <div class="server-card">
+          <div class="server-header">
+            <div class="server-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+              </svg>
+            </div>
+            <div class="server-title-section">
+              <h3 class="server-title">Telegram Bot</h3>
+              <p class="server-subtitle">Управление музыкой через Telegram</p>
+            </div>
+            <div class="server-status-badge" id="telegram-bot-badge">
+              <span class="status-dot status-active"></span>
+              <span class="status-text">Активен</span>
+            </div>
+          </div>
+
+          <div class="server-body">
+            <div class="server-info-box">
+              <div class="info-box-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span>Telegram Bot запущен</span>
+              </div>
+              <div class="info-box-content">
+                <p>Telegram бот работает на порту 3004 и позволяет управлять музыкой через мессенджер.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div> <!-- End servers-grid -->
+      </div>
+
+<!-- Profile Page -->
+<div class="page" id="profile-page">
+  <div class="servers-container">
+    <div class="servers-header">
+      <h1>Профиль</h1>
+      <p class="servers-subtitle">Управление вашим аккаунтом и персонализация</p>
+    </div>
+
+    <div class="servers-grid">
+      <!-- User Info Card -->
+      <div class="server-card">
+        <div class="server-header">
+          <div class="server-icon editable-icon" id="user-avatar-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <input type="file" id="user-avatar-input" accept="image/*" style="display: none;">
+            <div class="icon-edit-overlay">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="server-title-section">
+            <h3 class="server-title" id="profile-username-display">Пользователь</h3>
+            <p class="server-subtitle" id="profile-uid-display">UID: Loading...</p>
+          </div>
+        </div>
+
+        <div class="server-body">
+          <div class="server-info-box">
+            <div class="info-box-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+              </svg>
+              <span>Информация об аккаунте</span>
+            </div>
+            <div class="info-box-content">
+              <div class="info-row">
+                <span class="info-label">Треков в библиотеке:</span>
+                <span class="info-value" id="profile-tracks-count">0</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Плейлистов:</span>
+                <span class="info-value" id="profile-playlists-count">0</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Прослушано:</span>
+                <span class="info-value" id="profile-history-count">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Telegram Connection Card -->
+      <div class="server-card">
+        <div class="server-header">
+          <div class="server-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+            </svg>
+          </div>
+          <div class="server-title-section">
+            <h3 class="server-title">Telegram</h3>
+            <p class="server-subtitle">Подключение к Telegram боту</p>
+          </div>
+          <div class="server-status-badge" id="profile-telegram-badge">
+            <span class="status-dot status-inactive"></span>
+            <span class="status-text">Не подключен</span>
+          </div>
+        </div>
+
+        <div class="server-body">
+          <div class="server-info-box">
+            <div class="info-box-content">
+              <p>Подключите Telegram для управления музыкой через мессенджер и синхронизации между устройствами.</p>
+            </div>
+          </div>
+          <div class="server-controls">
+            <button class="server-btn server-btn-primary" id="connect-telegram-btn">
+              Подключить Telegram
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Management Card -->
+      <div class="server-card">
+        <div class="server-header">
+          <div class="server-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+          </div>
+          <div class="server-title-section">
+            <h3 class="server-title">Аккаунты</h3>
+            <p class="server-subtitle">Управление профилями</p>
+          </div>
+        </div>
+
+        <div class="server-body">
+          <div class="server-info-box">
+            <div class="info-box-content">
+              <p>Создавайте несколько профилей с отдельными плейлистами и настройками.</p>
+            </div>
+          </div>
+          <div class="server-controls">
+            <button class="server-btn server-btn-secondary" id="profile-switch-account-btn">
+              Сменить аккаунт
+            </button>
+            <button class="server-btn server-btn-secondary" id="profile-create-account-btn">
+              Создать новый
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Page -->
+<div class="page" id="settings-page">
+  <div class="servers-container">
+    <div class="servers-header">
+      <h1>Настройки</h1>
+      <p class="servers-subtitle">Персонализация приложения</p>
+    </div>
+
+    <div class="servers-grid">
+      <!-- Theme Card -->
+      <div class="server-card">
+        <div class="server-header">
+          <div class="server-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+            </svg>
+          </div>
+          <div class="server-title-section">
+            <h3 class="server-title">Тема оформления</h3>
+            <p class="server-subtitle">Настройка внешнего вида</p>
+          </div>
+        </div>
+
+        <div class="server-body">
+          <!-- Theme options here -->
+        </div>
+      </div>
+
+      <!-- Video Backgrounds Card -->
+      <div class="server-card">
+        <div class="server-header">
+          <div class="server-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+            </svg>
+          </div>
+          <div class="server-title-section">
+            <h3 class="server-title">Фоны</h3>
+            <p class="server-subtitle">Настройка фонового изображения или видео</p>
+          </div>
+        </div>
+
+        <div class="server-body">
+          <div class="server-option">
+            <div class="option-info">
+              <div class="option-text">
+                <div class="option-title">Включить видео фоны</div>
+                <div class="option-description">Показывать видео клипы на фоне при воспроизведении</div>
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="video-backgrounds-toggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="server-divider"></div>
+
+          <div class="server-option">
+            <div class="option-info">
+              <div class="option-text">
+                <div class="option-title">Использовать кастомный фон</div>
+                <div class="option-description">Загрузите свое изображение или видео</div>
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="custom-background-toggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="custom-background-section" id="custom-background-section">
+            <div class="custom-background-preview" id="custom-background-preview">
+              <div class="preview-placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.3)">
+                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                </svg>
+                <p>Фон не загружен</p>
+              </div>
+            </div>
+
+            <div class="server-controls">
+              <input type="file" id="custom-background-input" accept="image/*,video/*" style="display: none;">
+              <button class="server-btn server-btn-primary" id="upload-background-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                </svg>
+                Загрузить фон
+              </button>
+              <button class="server-btn server-btn-secondary" id="remove-background-btn" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                Удалить фон
+              </button>
+            </div>
+
+            <!-- Настройки glassmorphism -->
+            <div class="glassmorphism-settings" id="glassmorphism-settings" style="margin-top: 20px; display: none;">
+              <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px; color: rgba(255,255,255,0.9);">Настройки эффекта</h4>
+              
+              <!-- Blur slider -->
+              <div class="server-option" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+                <div class="option-info" style="width: 100%;">
+                  <div class="option-text">
+                    <div class="option-title">Размытие (Blur)</div>
+                    <div class="option-description">Сила эффекта размытия стекла</div>
+                  </div>
+                  <span id="blur-value" style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7);">20px</span>
+                </div>
+                <input type="range" id="blur-slider" min="0" max="40" value="20" step="1" 
+                  style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; outline: none; cursor: pointer;">
+              </div>
+
+              <!-- Opacity slider -->
+              <div class="server-option" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+                <div class="option-info" style="width: 100%;">
+                  <div class="option-text">
+                    <div class="option-title">Прозрачность элементов</div>
+                    <div class="option-description">Прозрачность интерфейса</div>
+                  </div>
+                  <span id="opacity-value" style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7);">70%</span>
+                </div>
+                <input type="range" id="opacity-slider" min="0" max="100" value="70" step="1" 
+                  style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; outline: none; cursor: pointer;">
+              </div>
+
+              <!-- Background brightness slider -->
+              <div class="server-option" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+                <div class="option-info" style="width: 100%;">
+                  <div class="option-text">
+                    <div class="option-title">Яркость фона</div>
+                    <div class="option-description">Затемнение фонового изображения</div>
+                  </div>
+                  <span id="brightness-value" style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7);">50%</span>
+                </div>
+                <input type="range" id="brightness-slider" min="0" max="100" value="50" step="1" 
+                  style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; outline: none; cursor: pointer;">
+              </div>
+
+              <!-- Background opacity slider -->
+              <div class="server-option" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+                <div class="option-info" style="width: 100%;">
+                  <div class="option-text">
+                    <div class="option-title">Видимость фона</div>
+                    <div class="option-description">Прозрачность фонового изображения</div>
+                  </div>
+                  <span id="bg-opacity-value" style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7);">60%</span>
+                </div>
+                <input type="range" id="bg-opacity-slider" min="0" max="100" value="60" step="1" 
+                  style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; outline: none; cursor: pointer;">
+              </div>
+
+              <button class="server-btn server-btn-secondary" id="reset-glassmorphism-btn" style="margin-top: 12px; width: 100%;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                </svg>
+                Сбросить настройки
+              </button>
+            </div>
+
+            <div class="server-info-box" style="margin-top: 16px;">
+              <div class="info-box-content">
+                <p style="font-size: 13px; color: rgba(255,255,255,0.6); margin: 0;">
+                  <strong>Поддерживаемые форматы:</strong><br>
+                  Изображения: JPG, PNG, GIF, WebP<br>
+                  Видео: MP4, WebM, OGG
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hotkeys Card -->
+      <div class="server-card">
+        <div class="server-header">
+          <div class="server-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/>
+            </svg>
+          </div>
+          <div class="server-title-section">
+            <h3 class="server-title">Горячие клавиши</h3>
+            <p class="server-subtitle">Управление с клавиатуры</p>
+          </div>
+        </div>
+
+        <div class="server-body">
+          <div class="server-info-box">
+            <div class="info-box-content">
+              <ul>
+                <li><kbd>Space</kbd> - Пауза/Воспроизведение</li>
+                <li><kbd>→</kbd> - Следующий трек</li>
+                <li><kbd>←</kbd> - Предыдущий трек</li>
+                <li><kbd>↑</kbd> - Увеличить громкость</li>
+                <li><kbd>↓</kbd> - Уменьшить громкость</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cache Card -->
+      <div class="server-card">
+        <div class="server-header">
+          <div class="server-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45C23.16 18.16 24 16.68 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.15 0 10.77 0 14c0 3.31 2.69 6 6 6h11.73l2 2L21 20.73 4.27 4 3 5.27zM7.73 10l8 8H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h1.73z"/>
+            </svg>
+          </div>
+          <div class="server-title-section">
+            <h3 class="server-title">Кеш</h3>
+            <p class="server-subtitle">Управление кешированными файлами</p>
+          </div>
+        </div>
+
+        <div class="server-body">
+          <div class="server-info-box">
+            <div class="info-box-content">
+              <div class="info-row">
+                <span class="info-label">Размер кеша:</span>
+                <span class="info-value" id="cache-size">Calculating...</span>
+              </div>
+            </div>
+          </div>
+          <div class="server-controls">
+            <button class="server-btn server-btn-warning" id="clear-cache-btn">
+              Очистить кеш
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <!-- Player Page (Full Screen) -->
+      <div class="page" id="player-page">
+        <!-- Видео фон для плеера -->
+        <div class="player-video-overlay" id="player-video-overlay"></div>
+        
+        <button class="back-btn" id="back-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+          </svg>
+        </button>
+
+      <div class="player-content">
+        <div class="player-cover-large" id="player-cover-large">♪</div>
+        
+        <div class="player-info-large">
+          <h1 id="player-title-large">Название трека</h1>
+          <p id="player-artist-large">Исполнитель</p>
+          
+          <div class="player-progress-large">
+            <span class="time" id="current-time-large">0:00</span>
+            <div class="progress-bar-large">
+              <div class="progress-fill-large" id="progress-fill-large"></div>
+            </div>
+            <span class="time" id="total-time-large">0:00</span>
+          </div>
+
+          <div class="player-controls-large">
+            <button class="btn-icon-large">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+              </svg>
+            </button>
+            <button class="btn-icon-large" id="prev-btn-large">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+              </svg>
+            </button>
+            <button class="btn-play-large" id="play-btn-large">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+            <button class="btn-icon-large" id="next-btn-large">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+              </svg>
+            </button>
+            <button class="btn-icon-large" id="show-lyrics-btn" title="Показать текст">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="lyrics-container" id="lyrics-container">
+            <div class="lyrics-line">Текст песни загружается...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lyrics Page (Full Screen) -->
+    <div class="page" id="lyrics-page">
+      <button class="back-btn" id="back-from-lyrics-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+
+      <div class="lyrics-page-content">
+        <h2 id="lyrics-page-title">Название трека</h2>
+        <p id="lyrics-page-artist">Исполнитель</p>
+        
+        <div class="lyrics-container-page" id="lyrics-container-page">
+          <div class="lyrics-line">Текст песни загружается...</div>
+        </div>
+      </div>
+    </div>
+    </main>
+    </div> <!-- End content-wrapper -->
+  </div> <!-- End app-container -->
+
+  <!-- Mini Player -->
+  <div class="mini-player">
+    <!-- Progress bar for track playback -->
+    <div class="mini-player-progress" id="mini-progress-bar">
+      <div class="mini-player-progress-fill" id="mini-progress-fill"></div>
+    </div>
+    
+    <div class="mini-player-content">
+      <div class="mini-player-track" id="mini-player-track">
+        <div class="mini-cover" id="mini-cover">♪</div>
+        <div class="mini-info">
+          <div class="mini-title" id="mini-title">Выберите трек</div>
+          <div class="mini-artist" id="mini-artist">—</div>
+        </div>
+      </div>
+
+      <div class="mini-player-controls">
+        <button class="btn-icon-mini" id="shuffle-btn" title="Перемешать">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+          </svg>
+        </button>
+        <button class="btn-icon-mini" id="mini-prev-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+          </svg>
+        </button>
+        <button class="btn-play-mini" id="mini-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <button class="btn-icon-mini" id="mini-next-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
+        </button>
+        <button class="btn-icon-mini" id="repeat-btn" title="Повтор">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mini-player-right">
+        <button class="btn-icon-mini" id="queue-btn" title="Следующие треки">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+          </svg>
+        </button>
+        <span class="time-mini" id="mini-current-time">0:00</span>
+        <span class="time-mini">/</span>
+        <span class="time-mini" id="mini-total-time">0:00</span>
+        <button class="btn-icon-mini" id="download-btn" title="Скачать трек">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/>
+          </svg>
+        </button>
+        <button class="btn-icon-mini" id="lyrics-btn" title="Текст песни">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+          </svg>
+        </button>
+        <button class="btn-icon-mini" id="volume-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+          </svg>
+        </button>
+        <input type="range" class="volume-slider-mini" min="0" max="100" value="70" id="volume-slider-mini">
+        <button class="btn-icon-mini" id="add-track-btn" title="Добавить в избранное">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+        <button class="btn-icon-mini" id="add-to-playlist-btn" title="Добавить в основной плейлист">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+        </button>
+        <button class="btn-icon-mini btn-wave-similar" id="wave-similar-btn" title="Моя волна по этому треку">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/>
+            <path d="M7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z" opacity="0.6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Queue Modal (Next Tracks) -->
+  <div class="queue-modal" id="queue-modal" style="display: none;">
+    <div class="queue-modal-content">
+      <div class="queue-modal-header">
+        <h3>Следующие треки</h3>
+        <button class="btn-icon-close" id="close-queue-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="queue-list" id="queue-list">
+        <!-- Tracks will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Track Modal -->
+  <div class="modal" id="add-modal">
+    <div class="modal-content glass-modal">
+      <div class="modal-header">
+        <div>
+          <h2>Добавить треки</h2>
+          <p class="modal-hint">Введите треки по одному на строку в формате "Исполнитель - Название"</p>
+        </div>
+        <button class="btn-icon-close" id="close-add-modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+      <textarea id="track-input" class="glass-input" placeholder="Например:&#10;Скриптонит - Это любовь&#10;Miyagi - I Got Love&#10;Oxxxymiron - Город под подошвой"></textarea>
+      <div class="modal-actions">
+        <button class="btn-glass btn-secondary" id="cancel-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+          Отмена
+        </button>
+        <button class="btn-glass btn-primary" id="confirm-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+          Добавить
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="audio"></audio>
+  <script src="wave-bass-effect.js"></script>
+  <script src="wave-shader.js"></script>
+  <script src="wave-similar-tracks.js"></script>
+  <script src="modal.js"></script>
+  <script src="loading-screen.js"></script>
+  <script src="theme-customizer.js"></script>
+  <script src="stars-animation.js"></script>
+  <script src="test-wave.js"></script>
+  <script src="playlist-avatars.js"></script>
+  <script src="profile-page.js"></script>
+  <script src="artist-page.js"></script>
+  <script src="custom-background.js"></script>
+  <script src="renderer.js"></script>
+  <script src="playlists-library.js"></script>
+  <script src="servers-logic.js"></script>
+</body>
+</html>

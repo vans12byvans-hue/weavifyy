@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест: Моя волна по треку</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #0a0a0a;
+      color: #fff;
+    }
+    
+    .test-section {
+      background: #1a1a1a;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+    
+    h2 {
+      color: #1db954;
+      margin-top: 0;
+    }
+    
+    button {
+      background: #1db954;
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 5px;
+    }
+    
+    button:hover {
+      background: #1ed760;
+    }
+    
+    .log {
+      background: #000;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    
+    .log-entry {
+      margin: 5px 0;
+      padding: 5px;
+      border-left: 3px solid #1db954;
+      padding-left: 10px;
+    }
+    
+    .log-error {
+      border-left-color: #f44336;
+      color: #f44336;
+    }
+    
+    .log-success {
+      border-left-color: #4caf50;
+      color: #4caf50;
+    }
+    
+    .log-warning {
+      border-left-color: #ff9800;
+      color: #ff9800;
+    }
+    
+    input {
+      background: #2a2a2a;
+      border: 1px solid #444;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      width: 300px;
+      margin: 5px;
+    }
+    
+    .track-info {
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    
+    .track-info strong {
+      color: #1db954;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌊 Тест: Моя волна по треку</h1>
+  
+  <div class="test-section">
+    <h2>1. Проверка загрузки модуля</h2>
+    <button onclick="testModuleLoad()">Проверить загрузку</button>
+    <div id="module-log" class="log"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>2. Тест извлечения ключевых слов</h2>
+    <input type="text" id="test-title" placeholder="Название трека" value="Blinding Lights">
+    <input type="text" id="test-artist" placeholder="Исполнитель" value="The Weeknd">
+    <button onclick="testKeywordExtraction()">Извлечь ключевые слова</button>
+    <div id="keywords-log" class="log"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>3. Тест определения настроения</h2>
+    <input type="text" id="mood-title" placeholder="Название трека" value="Chill Vibes Lofi">
+    <input type="text" id="mood-artist" placeholder="Исполнитель" value="Lofi Beats">
+    <button onclick="testMoodDetection()">Определить настроение</button>
+    <div id="mood-log" class="log"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>4. Тест генерации запросов</h2>
+    <button onclick="testQueryGeneration()">Сгенерировать запросы</button>
+    <div id="queries-log" class="log"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>5. Полный тест поиска</h2>
+    <div class="track-info">
+      <strong>Тестовый трек:</strong><br>
+      Название: <span id="full-test-title">Blinding Lights</span><br>
+      Исполнитель: <span id="full-test-artist">The Weeknd</span>
+    </div>
+    <button onclick="testFullSearch()">Запустить полный поиск</button>
+    <div id="full-log" class="log"></div>
+  </div>
+  
+  <script src="wave-similar-tracks.js"></script>
+  <script>
+    // Мок функций для тестирования
+    window.showNotification = function(message, type) {
+      console.log(`[${type}] ${message}`);
+      addLog('full-log', message, type);
+    };
+    
+    window.setWavePlaylist = function(tracks) {
+      console.log('setWavePlaylist called with', tracks.length, 'tracks');
+      addLog('full-log', `Плейлист установлен: ${tracks.length} треков`, 'success');
+    };
+    
+    window.loadWavePlaylist = function(tracks) {
+      console.log('loadWavePlaylist called with', tracks.length, 'tracks');
+      addLog('full-log', `Плейлист загружен: ${tracks.length} треков`, 'success');
+    };
+    
+    // Утилита для логирования
+    function addLog(elementId, message, type = 'info') {
+      const log = document.getElementById(elementId);
+      const entry = document.createElement('div');
+      entry.className = `log-entry log-${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      log.appendChild(entry);
+      log.scrollTop = log.scrollHeight;
+    }
+    
+    function clearLog(elementId) {
+      document.getElementById(elementId).innerHTML = '';
+    }
+    
+    // Тест 1: Проверка загрузки модуля
+    function testModuleLoad() {
+      clearLog('module-log');
+      
+      if (window.waveSimilarTracks) {
+        addLog('module-log', '✅ Модуль waveSimilarTracks загружен', 'success');
+        addLog('module-log', `Тип: ${typeof window.waveSimilarTracks}`, 'info');
+        addLog('module-log', `Методы: ${Object.getOwnPropertyNames(Object.getPrototypeOf(window.waveSimilarTracks)).join(', ')}`, 'info');
+      } else {
+        addLog('module-log', '❌ Модуль waveSimilarTracks НЕ загружен', 'error');
+      }
+      
+      if (window.WaveSimilarTracks) {
+        addLog('module-log', '✅ Класс WaveSimilarTracks доступен', 'success');
+      } else {
+        addLog('module-log', '⚠️ Класс WaveSimilarTracks недоступен', 'warning');
+      }
+    }
+    
+    // Тест 2: Извлечение ключевых слов
+    function testKeywordExtraction() {
+      clearLog('keywords-log');
+      
+      const track = {
+        title: document.getElementById('test-title').value,
+        artist: document.getElementById('test-artist').value
+      };
+      
+      addLog('keywords-log', `Трек: ${track.title} - ${track.artist}`, 'info');
+      
+      try {
+        const keywords = window.waveSimilarTracks.extractKeywords(track);
+        addLog('keywords-log', `✅ Найдено ${keywords.length} ключевых слов`, 'success');
+        keywords.forEach(kw => {
+          addLog('keywords-log', `  • ${kw}`, 'info');
+        });
+      } catch (error) {
+        addLog('keywords-log', `❌ Ошибка: ${error.message}`, 'error');
+      }
+    }
+    
+    // Тест 3: Определение настроения
+    function testMoodDetection() {
+      clearLog('mood-log');
+      
+      const track = {
+        title: document.getElementById('mood-title').value,
+        artist: document.getElementById('mood-artist').value
+      };
+      
+      addLog('mood-log', `Трек: ${track.title} - ${track.artist}`, 'info');
+      
+      try {
+        const moods = window.waveSimilarTracks.detectMood(track);
+        addLog('mood-log', `✅ Определено ${moods.length} настроений`, 'success');
+        moods.forEach(mood => {
+          addLog('mood-log', `  • ${mood}`, 'info');
+        });
+      } catch (error) {
+        addLog('mood-log', `❌ Ошибка: ${error.message}`, 'error');
+      }
+    }
+    
+    // Тест 4: Генерация запросов
+    function testQueryGeneration() {
+      clearLog('queries-log');
+      
+      const keywords = ['the weeknd', 'blinding', 'lights'];
+      const moods = ['electronic', 'energetic'];
+      
+      addLog('queries-log', `Ключевые слова: ${keywords.join(', ')}`, 'info');
+      addLog('queries-log', `Настроения: ${moods.join(', ')}`, 'info');
+      
+      try {
+        const queries = window.waveSimilarTracks.generateSearchQueries(keywords, moods);
+        addLog('queries-log', `✅ Сгенерировано ${queries.length} запросов`, 'success');
+        queries.forEach((q, i) => {
+          addLog('queries-log', `  ${i + 1}. "${q}"`, 'info');
+        });
+      } catch (error) {
+        addLog('queries-log', `❌ Ошибка: ${error.message}`, 'error');
+      }
+    }
+    
+    // Тест 5: Полный поиск
+    async function testFullSearch() {
+      clearLog('full-log');
+      
+      const track = {
+        title: document.getElementById('full-test-title').textContent,
+        artist: document.getElementById('full-test-artist').textContent,
+        yandexId: '12345'
+      };
+      
+      addLog('full-log', `🔍 Запуск поиска для: ${track.title} - ${track.artist}`, 'info');
+      
+      try {
+        // Активируем режим
+        await window.waveSimilarTracks.activate(track);
+        
+        addLog('full-log', '✅ Режим активирован', 'success');
+        addLog('full-log', `Найдено треков: ${window.waveSimilarTracks.similarTracks.length}`, 'info');
+        
+        // Показываем первые 5 треков
+        if (window.waveSimilarTracks.similarTracks.length > 0) {
+          addLog('full-log', 'Первые 5 треков:', 'info');
+          window.waveSimilarTracks.similarTracks.slice(0, 5).forEach((t, i) => {
+            addLog('full-log', `  ${i + 1}. ${t.title} - ${t.artist}`, 'info');
+          });
+        }
+        
+      } catch (error) {
+        addLog('full-log', `❌ Ошибка: ${error.message}`, 'error');
+        console.error(error);
+      }
+    }
+    
+    // Автоматический тест при загрузке
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        testModuleLoad();
+      }, 500);
+    });
+  </script>
+</body>
+</html>

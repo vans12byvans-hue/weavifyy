@@ -1,0 +1,517 @@
+/* ============================================
+   GLASSMORPHISM СТИЛИ ДЛЯ КАСТОМНОГО ФОНА
+   Активируется при добавлении класса custom-background-active к body
+   
+   ВАЖНО: Меняем ТОЛЬКО background и backdrop-filter
+   НЕ меняем padding, margin, border, border-radius, размеры!
+   Интерфейс должен оставаться таким же, только прозрачным
+   ============================================ */
+
+/* CSS переменные для настройки glassmorphism */
+:root {
+  --custom-bg-blur: 20px;
+  --custom-bg-opacity: 0.7;
+  --custom-bg-brightness: 0.5;
+  --custom-bg-image-opacity: 0.6;
+}
+
+/* Фон приложения */
+body.custom-background-active #video-background {
+  filter: blur(8px) brightness(var(--custom-bg-brightness)) !important;
+  opacity: var(--custom-bg-image-opacity) !important;
+}
+
+/* Изображения и видео на весь экран */
+body.custom-background-active #video-background img,
+body.custom-background-active #video-background video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Основные контейнеры */
+body.custom-background-active .sidebar {
+  background: rgba(15, 15, 15, var(--custom-bg-opacity)) !important;
+  backdrop-filter: blur(var(--custom-bg-blur));
+  -webkit-backdrop-filter: blur(var(--custom-bg-blur));
+}
+
+body.custom-background-active .content-wrapper {
+  background: rgba(10, 10, 10, calc(var(--custom-bg-opacity) * 0.7)) !important;
+  backdrop-filter: blur(var(--custom-bg-blur));
+  -webkit-backdrop-filter: blur(var(--custom-bg-blur));
+}
+
+body.custom-background-active .titlebar {
+  background: rgba(10, 10, 10, var(--custom-bg-opacity)) !important;
+  backdrop-filter: blur(var(--custom-bg-blur));
+  -webkit-backdrop-filter: blur(var(--custom-bg-blur));
+}
+
+body.custom-background-active .mini-player {
+  background: rgba(10, 10, 10, var(--custom-bg-opacity)) !important;
+  backdrop-filter: blur(calc(var(--custom-bg-blur) * 1.5));
+  -webkit-backdrop-filter: blur(calc(var(--custom-bg-blur) * 1.5));
+}
+
+/* Кнопки sidebar */
+body.custom-background-active .sidebar-btn {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.11)) !important;
+  backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.5));
+  -webkit-backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.5));
+}
+
+body.custom-background-active .sidebar-btn:hover {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.21)) !important;
+}
+
+body.custom-background-active .sidebar-btn.active {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.36)) !important;
+}
+
+/* Страницы и секции */
+body.custom-background-active .page {
+  background: transparent !important;
+}
+
+body.custom-background-active .section {
+  background: transparent !important;
+}
+
+body.custom-background-active .section-header {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Карточки */
+body.custom-background-active .album-card,
+body.custom-background-active .playlist-card,
+body.custom-background-active .artist-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.custom-background-active .album-card:hover,
+body.custom-background-active .playlist-card:hover,
+body.custom-background-active .artist-card:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Обложки */
+body.custom-background-active .album-cover,
+body.custom-background-active .carousel-cover {
+  background: rgba(42, 42, 42, 0.6) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Треки */
+body.custom-background-active .track-item,
+body.custom-background-active .playlist-track {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.custom-background-active .track-item:hover,
+body.custom-background-active .playlist-track:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.custom-background-active .track-item.active,
+body.custom-background-active .playlist-track.active {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Поиск */
+body.custom-background-active .search-input {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+body.custom-background-active .search-input:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Кнопки */
+body.custom-background-active .play-all-btn,
+body.custom-background-active .btn-primary,
+body.custom-background-active .btn-secondary {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.custom-background-active .play-all-btn:hover,
+body.custom-background-active .btn-primary:hover,
+body.custom-background-active .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Wave Hero */
+body.custom-background-active .wave-hero-compact {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.custom-background-active .wave-hero-compact:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.custom-background-active .wave-play-btn,
+body.custom-background-active .wave-shuffle-btn {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.custom-background-active .wave-play-btn:hover,
+body.custom-background-active .wave-shuffle-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Модальные окна */
+body.custom-background-active .modal-content {
+  background: rgba(10, 10, 10, 0.85) !important;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+/* Playlist header */
+body.custom-background-active .playlist-header {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Queue */
+body.custom-background-active .queue-container {
+  background: rgba(10, 10, 10, 0.7) !important;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+body.custom-background-active .queue-item {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+body.custom-background-active .queue-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.custom-background-active .queue-item.active {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Large Player */
+body.custom-background-active .large-player {
+  background: rgba(10, 10, 10, 0.8) !important;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+}
+
+/* Artist page */
+body.custom-background-active .artist-header {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+/* Scrollbar */
+body.custom-background-active ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+body.custom-background-active ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+body.custom-background-active ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Notifications - glassmorphism */
+body.custom-background-active .toast {
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.85) 0%, rgba(18, 18, 18, 0.85) 100%) !important;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
+}
+
+body.custom-background-active .toast:hover {
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(18, 18, 18, 0.9) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.12) inset !important;
+}
+
+/* Context menu */
+body.custom-background-active .context-menu {
+  background: rgba(10, 10, 10, 0.9) !important;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+body.custom-background-active .context-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Tooltips */
+body.custom-background-active .tooltip {
+  background: rgba(10, 10, 10, 0.9) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* Auth screen */
+body.custom-background-active .auth-form {
+  background: rgba(10, 10, 10, 0.8) !important;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+/* Settings */
+body.custom-background-active .settings-section {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+body.custom-background-active .settings-input,
+body.custom-background-active .auth-input,
+body.custom-background-active #track-input {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.custom-background-active .settings-input:focus,
+body.custom-background-active .auth-input:focus,
+body.custom-background-active #track-input:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.custom-background-active .settings-select,
+body.custom-background-active .sort-select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.custom-background-active .settings-select:focus,
+body.custom-background-active .sort-select:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Фильтры */
+body.custom-background-active .filter-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.custom-background-active .filter-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.custom-background-active .filter-btn.active {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Badges */
+body.custom-background-active .source-badge,
+body.custom-background-active .yandex-badge {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Progress bars */
+body.custom-background-active .progress-container,
+body.custom-background-active .progress-bar-large,
+body.custom-background-active .mini-player-progress {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Volume controls */
+body.custom-background-active .volume-container {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Lyrics */
+body.custom-background-active .lyrics-container {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.custom-background-active .lyrics-line {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+body.custom-background-active .lyrics-line.active {
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+/* Empty states */
+body.custom-background-active .empty-state {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Loading spinner */
+body.custom-background-active .loading-spinner {
+  background: rgba(10, 10, 10, 0.7) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Icon buttons */
+body.custom-background-active .btn-icon-mini,
+body.custom-background-active .btn-icon-large,
+body.custom-background-active .btn-icon-small,
+body.custom-background-active .refresh-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.custom-background-active .btn-icon-mini:hover,
+body.custom-background-active .btn-icon-large:hover,
+body.custom-background-active .btn-icon-small:hover,
+body.custom-background-active .refresh-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Accounts */
+body.custom-background-active .current-account,
+body.custom-background-active .account-item {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.custom-background-active .current-account:hover,
+body.custom-background-active .account-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.custom-background-active .account-avatar,
+body.custom-background-active .account-item-avatar,
+body.custom-background-active .profile-avatar {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Stats */
+body.custom-background-active .stat-item {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.custom-background-active .stat-icon {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Upload dropzone */
+body.custom-background-active .upload-dropzone {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.custom-background-active .upload-dropzone:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Volume slider */
+body.custom-background-active .volume-slider-mini {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Custom background section */
+body.custom-background-active .custom-background-section {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Playlist Library - glassmorphism */
+body.custom-background-active .playlist-library-container {
+  background: transparent !important;
+}
+
+body.custom-background-active .playlists-sidebar {
+  background: rgba(10, 10, 10, var(--custom-bg-opacity)) !important;
+  backdrop-filter: blur(var(--custom-bg-blur));
+  -webkit-backdrop-filter: blur(var(--custom-bg-blur));
+}
+
+body.custom-background-active .playlists-sidebar-section {
+  background: transparent !important;
+}
+
+body.custom-background-active .playlists-sidebar-header {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.07)) !important;
+  backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.5));
+  -webkit-backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.5));
+}
+
+body.custom-background-active .sidebar-playlist-item {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.04)) !important;
+  backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.4));
+  -webkit-backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.4));
+}
+
+body.custom-background-active .sidebar-playlist-item:hover {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.11)) !important;
+}
+
+body.custom-background-active .sidebar-playlist-item.active {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.17)) !important;
+}
+
+body.custom-background-active .playlist-content-area {
+  background: rgba(10, 10, 10, calc(var(--custom-bg-opacity) * 0.7)) !important;
+  backdrop-filter: blur(var(--custom-bg-blur));
+  -webkit-backdrop-filter: blur(var(--custom-bg-blur));
+}
+
+body.custom-background-active .playlist-content-header {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.07)) !important;
+  backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.75));
+  -webkit-backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.75));
+}
+
+body.custom-background-active .playlist-tracks-container {
+  background: transparent !important;
+}
+
+body.custom-background-active .add-playlist-btn {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.11)) !important;
+  backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.4));
+  -webkit-backdrop-filter: blur(calc(var(--custom-bg-blur) * 0.4));
+}
+
+body.custom-background-active .add-playlist-btn:hover {
+  background: rgba(255, 255, 255, calc(var(--custom-bg-opacity) * 0.21)) !important;
+}

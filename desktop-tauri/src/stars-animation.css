@@ -1,0 +1,103 @@
+/* Падающие звездочки с blur эффектом */
+
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: transparent;
+  opacity: 1; /* Начинаем с видимой звездочки */
+  animation: fall 10s linear forwards; /* ИЗМЕНЕНО: forwards вместо infinite - анимация выполняется один раз */
+  will-change: transform, opacity; /* Оптимизация для GPU */
+  filter: drop-shadow(0 0 3px var(--star-color, #ffffff));
+}
+
+/* SVG звезда с поддержкой цвета */
+.star::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Используем mask для применения цвета */
+  background: var(--star-color, #ffffff);
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+/* Разные размеры звездочек */
+.star.small {
+  width: 9px;
+  height: 9px;
+  filter: drop-shadow(0 0 2px var(--star-color, #ffffff));
+}
+
+.star.medium {
+  width: 12px;
+  height: 12px;
+  filter: drop-shadow(0 0 3px var(--star-color, #ffffff));
+}
+
+.star.large {
+  width: 15px;
+  height: 15px;
+  filter: drop-shadow(0 0 4px var(--star-color, #ffffff));
+}
+
+/* Анимация падения - ИСПРАВЛЕНО: звездочки всегда видны */
+@keyframes fall {
+  0% {
+    transform: translateY(-50px) translateX(0); /* Начинаем выше экрана */
+    opacity: 0;
+  }
+  3% {
+    opacity: 1; /* Быстро появляемся */
+  }
+  97% {
+    opacity: 1; /* Остаемся видимыми почти до конца */
+  }
+  100% {
+    transform: translateY(calc(100vh + 50px)) translateX(var(--drift, 0px)); /* Заканчиваем ниже экрана */
+    opacity: 0;
+  }
+}
+
+/* Дополнительный blur при прохождении через стеклянные элементы */
+.star.behind-glass {
+  filter: drop-shadow(0 0 5px var(--star-color, #ffffff)) blur(2px);
+  opacity: 0.7;
+}
+
+/* Настройки для разных скоростей - переопределяют базовую длительность */
+.star.speed-1 { animation-duration: 8s !important; }
+.star.speed-2 { animation-duration: 10s !important; }
+.star.speed-3 { animation-duration: 12s !important; }
+.star.speed-4 { animation-duration: 14s !important; }
+.star.speed-5 { animation-duration: 16s !important; }
+
+/* Мерцание звездочек */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.star.twinkle {
+  animation: fall linear forwards, twinkle 2s ease-in-out infinite;
+}

@@ -1,0 +1,426 @@
+/* Artist Page Styles - Dark Theme with Glass Effects */
+
+#artist-page {
+  padding: 0;
+  overflow-y: auto;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+/* Ensure artist page is completely hidden when not active */
+#artist-page:not(.active) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Artist Header */
+#artist-header {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.back-btn-artist {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 100;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.back-btn-artist:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.artist-hero {
+  position: relative;
+  display: flex;
+  gap: 40px;
+  align-items: flex-end;
+  padding: 120px 48px 48px;
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  min-height: 400px;
+}
+
+.artist-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.artist-avatar {
+  flex-shrink: 0;
+  width: 232px;
+  height: 232px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.artist-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.artist-name {
+  font-size: 72px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.98);
+  margin: 0;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.artist-genres {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.genre-tag {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+}
+
+.genre-tag:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.artist-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  max-width: 700px;
+}
+
+.artist-stats {
+  display: flex;
+  gap: 32px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+}
+
+.artist-stats span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.artist-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.artist-actions .glass-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 32px;
+  transition: all 0.3s ease;
+}
+
+.artist-actions .glass-btn.primary {
+  background: rgba(255, 255, 255, 0.98);
+  color: #000;
+  border: none;
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+}
+
+.artist-actions .glass-btn.primary:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.3);
+}
+
+.artist-actions .glass-btn:not(.primary) {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.artist-actions .glass-btn:not(.primary):hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Artist Tracks */
+#artist-tracks-container {
+  padding: 48px;
+  background: #0a0a0a;
+}
+
+.artist-tracks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 0 8px;
+}
+
+.artist-tracks-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+}
+
+.tracks-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.artist-tracks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.artist-track-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.artist-track-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
+}
+
+.artist-track-item:hover .track-actions {
+  opacity: 1;
+}
+
+.track-number {
+  width: 40px;
+  text-align: center;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
+.artist-track-item:hover .track-number {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.track-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.track-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.track-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.track-artist {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-duration {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  min-width: 50px;
+  text-align: right;
+}
+
+.track-actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.track-action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.track-action-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+.track-action-btn svg {
+  fill: rgba(255, 255, 255, 0.95);
+}
+
+/* Loading & Error States */
+.artist-loading,
+.artist-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 48px;
+  text-align: center;
+  min-height: 400px;
+}
+
+.loading-spinner {
+  width: 56px;
+  height: 56px;
+  border: 4px solid rgba(255, 255, 255, 0.08);
+  border-top-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.artist-loading p,
+.artist-error p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  font-weight: 500;
+}
+
+.no-tracks {
+  text-align: center;
+  padding: 80px 48px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .artist-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 100px 24px 32px;
+  }
+  
+  .artist-avatar {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .artist-name {
+    font-size: 48px;
+  }
+  
+  .artist-info {
+    align-items: center;
+  }
+  
+  .artist-stats {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .artist-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .artist-actions .glass-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  #artist-tracks-container {
+    padding: 32px 24px;
+  }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Interval Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #1a1a2e;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    
+    .log {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>setInterval Test</h1>
+  <p>This page tests if setInterval works properly</p>
+  <div id="logs"></div>
+  
+  <script>
+    const logsDiv = document.getElementById('logs');
+    let counter = 0;
+    
+    function addLog(message) {
+      const log = document.createElement('div');
+      log.className = 'log';
+      log.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logsDiv.insertBefore(log, logsDiv.firstChild);
+      console.log(message);
+      
+      // Keep only last 20 logs
+      while (logsDiv.children.length > 20) {
+        logsDiv.removeChild(logsDiv.lastChild);
+      }
+    }
+    
+    addLog('🧪 Starting interval test...');
+    
+    const intervalId = setInterval(() => {
+      counter++;
+      addLog(`⏰ Interval tick #${counter}`);
+      
+      if (counter >= 20) {
+        clearInterval(intervalId);
+        addLog('✅ Test completed! Interval works correctly.');
+      }
+    }, 500);
+    
+    addLog(`✅ Interval started with ID: ${intervalId}`);
+  </script>
+</body>
+</html>

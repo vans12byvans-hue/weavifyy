@@ -1,0 +1,862 @@
+/* ============================================
+   DOTIFY DESIGN SYSTEM - ПОЛНАЯ РЕАЛИЗАЦИЯ
+   По спецификации из developmentdesign.md
+   ============================================ */
+
+/* ЦВЕТОВАЯ СИСТЕМА */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #0A0A0A;
+  --bg-surface: #141414;
+  --bg-hover: #1A1A1A;
+  --bg-active: #1F1F1F;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --text-tertiary: #6B6B6B;
+  
+  --accent-red: #EF4444;
+  --border-color: #1F1F1F;
+  --divider-color: #2A2A2A;
+}
+
+/* ГЛОБАЛЬНЫЕ СТИЛИ */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ============================================
+   БОКОВАЯ НАВИГАЦИЯ - MINIMAL ICON-ONLY (64px)
+   ============================================ */
+.sidebar {
+  width: 64px !important;
+  min-width: 64px !important;
+  background: #000000 !important;
+  padding: 20px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+}
+
+.sidebar-section {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 18px !important;
+  align-items: center !important;
+  padding: 0 12px !important;
+}
+
+.sidebar-btn {
+  width: 40px !important;
+  height: 40px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #666 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: all 0.15s ease !important;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+.sidebar-btn span {
+  display: none !important;
+}
+
+.sidebar-btn svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.sidebar-btn:hover {
+  background: transparent !important;
+  color: #aaa !important;
+}
+
+.sidebar-btn.active {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+.sidebar-btn.active svg {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+.sidebar-divider {
+  height: 1px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  margin: 0 !important;
+  width: 24px !important;
+}
+
+.source-btn {
+  opacity: 0.4 !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.source-btn svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.source-btn:hover {
+  opacity: 0.7 !important;
+}
+
+.source-btn.active {
+  opacity: 1 !important;
+}
+
+/* Системные плейлисты */
+.sidebar-section-header {
+  display: none !important;
+}
+
+.sidebar-section-header h3 {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.refresh-btn,
+.add-playlist-btn {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.refresh-btn:hover,
+.add-playlist-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.sidebar-playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.sidebar-playlist-item:hover {
+  background: var(--bg-hover);
+}
+
+.sidebar-playlist-item.active {
+  background: var(--bg-hover);
+}
+
+.sidebar-playlist-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  background: var(--bg-surface);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.sidebar-playlist-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar-playlist-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-playlist-name {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-playlist-count {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  display: block;
+}
+
+/* ============================================
+   ОСНОВНОЙ КОНТЕНТ
+   ============================================ */
+.main-content {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 0;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.page {
+  padding: 24px 32px;
+}
+
+/* ============================================
+   LAYOUT С ПРАВОЙ ПАНЕЛЬЮ
+   ============================================ */
+.home-layout {
+  display: flex;
+  gap: 24px;
+}
+
+.content-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.right-panel {
+  width: 280px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.right-panel-section h3 {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.right-panel-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin: 12px 0 0 0;
+  line-height: 1.5;
+}
+
+/* ПЛАТФОРМА */
+.platform-icons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.platform-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-hover);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.platform-icon:hover {
+  transform: scale(1.1);
+}
+
+.platform-icon.active {
+  background: var(--accent-red);
+}
+
+.platform-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* НАСТРОЕНИЕ */
+.mood-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mood-btn {
+  height: 36px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.mood-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.mood-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.mood-btn.active {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* ============================================
+   МОЯ ВОЛНА - КОМПАКТНАЯ СТРОКА
+   ============================================ */
+.wave-hero-compact {
+  background: transparent;
+  border-radius: 0;
+  padding: 0 0 16px 0;
+  margin: 0 0 24px 0;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wave-hero-compact .play-btn,
+.wave-hero-compact .wave-play-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--text-secondary);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wave-hero-compact .play-btn:hover,
+.wave-hero-compact .wave-play-btn:hover {
+  transform: scale(1.06);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.wave-hero-compact h1,
+.wave-hero-compact .wave-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* Обложки волны */
+.wave-covers-scroll {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.wave-covers-compact {
+  display: flex;
+  gap: 8px;
+  height: 100%;
+}
+
+.wave-cover-compact {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  border: 2px solid var(--bg-primary);
+}
+
+.wave-cover-compact:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.wave-cover-compact img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wave-settings-btn,
+.wave-shuffle-btn {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.wave-settings-btn:hover,
+.wave-shuffle-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   КАРТОЧКИ ИНФОРМАЦИИ (3 в ряд)
+   ============================================ */
+.cards-row-three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.info-card {
+  background: var(--bg-surface);
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-height: 64px;
+}
+
+.info-card:hover {
+  background: var(--bg-hover);
+}
+
+.info-card-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-card-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+}
+
+.info-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-card-content h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-card-content p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-card-badge {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ============================================
+   СЕКЦИИ КОНТЕНТА
+   ============================================ */
+.content-section section {
+  margin-bottom: 40px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ============================================
+   СЕТКА ТРЕКОВ (160px карточки)
+   ============================================ */
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* Карточка трека */
+.track-card {
+  background: var(--bg-surface);
+  border-radius: 8px;
+  padding: 12px;
+  transition: background 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.track-card:hover {
+  background: var(--bg-hover);
+}
+
+.track-card:hover .track-card-play-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.track-card-image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  background: var(--divider-color);
+  overflow: hidden;
+  position: relative;
+}
+
+.track-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Кнопка play на hover */
+.track-card-play-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: none;
+  color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.track-card-play-btn:hover {
+  transform: scale(1.05) translateY(0);
+}
+
+.track-card-play-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.track-card-info {
+  color: var(--text-primary);
+}
+
+.track-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.track-card-artist {
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================
+   ПОИСК
+   ============================================ */
+.search-input {
+  width: 100%;
+  height: 40px;
+  background: var(--bg-surface);
+  border: none;
+  border-radius: 8px;
+  padding: 0 16px;
+  color: var(--text-primary);
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.search-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.search-input:focus {
+  outline: none;
+  background: var(--bg-hover);
+}
+
+/* Фильтры Pills */
+.search-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.filter-btn {
+  height: 32px;
+  padding: 0 16px;
+  background: var(--bg-surface);
+  border: none;
+  border-radius: 20px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-btn:hover {
+  background: var(--bg-hover);
+}
+
+.filter-btn.active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+/* ============================================
+   ПЛЕЕР (80px)
+   ============================================ */
+.player {
+  height: 80px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+}
+
+.player-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.player-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.player-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.player-title {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-artist {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.player-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.player-btn:hover {
+  color: var(--text-primary);
+}
+
+.player-btn.play-pause {
+  width: 32px;
+  height: 32px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.player-btn.play-pause:hover {
+  transform: scale(1.05);
+}
+
+.player-progress {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 40px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--divider-color);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--text-primary);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+@media (max-width: 1400px) {
+  .tracks-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  
+  .right-panel {
+    width: 240px;
+    min-width: 240px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cards-row-three {
+    grid-template-columns: 1fr;
+  }
+  
+  .home-layout {
+    flex-direction: column;
+  }
+  
+  .right-panel {
+    width: 100%;
+  }
+  
+  .tracks-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    min-width: 200px;
+  }
+  
+  .page {
+    padding: 16px;
+  }
+  
+  .wave-hero-compact h1,
+  .wave-hero-compact .wave-title {
+    font-size: 20px;
+  }
+  
+  .tracks-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
+}

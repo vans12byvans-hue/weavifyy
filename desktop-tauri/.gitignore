@@ -1,0 +1,17 @@
+
+.env
+stderr.log
+stdout.log
+src-backup*/
+*.key
+dist/
+src/dist/
+node_modules/
+www.youtube.com_cookies*.txt
+cache/
+__pycache__/
+*.pyc
+build-scripts/
+*.db-shm
+*.db-wal
+test-unified.db

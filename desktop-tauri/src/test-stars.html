@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Stars Test</title>
+  <link rel="stylesheet" href="stars-animation.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #1a1a2e;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 10000;
+    }
+    
+    button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background: #4a4a6a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background: #5a5a7a;
+    }
+    
+    .info {
+      margin-top: 20px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <h3>Stars Test</h3>
+    <button onclick="enableStars()">Enable Stars</button>
+    <button onclick="disableStars()">Disable Stars</button>
+    <button onclick="checkStatus()">Check Status</button>
+    <button onclick="clearConsole()">Clear Console</button>
+    <div class="info" id="info">
+      Status: Loading...
+    </div>
+  </div>
+  
+  <h1>Stars Animation Test</h1>
+  <p>Open DevTools (F12) to see logs</p>
+  <p>Stars should fall continuously</p>
+  
+  <script src="stars-animation.js"></script>
+  <script>
+    function enableStars() {
+      console.log('🧪 TEST: Enabling stars...');
+      if (window.starsAnimation) {
+        window.starsAnimation.setEnabled(true);
+        updateInfo();
+      } else {
+        console.error('❌ starsAnimation not found!');
+      }
+    }
+    
+    function disableStars() {
+      console.log('🧪 TEST: Disabling stars...');
+      if (window.starsAnimation) {
+        window.starsAnimation.setEnabled(false);
+        updateInfo();
+      }
+    }
+    
+    function checkStatus() {
+      console.log('🧪 TEST: Checking status...');
+      if (window.starsAnimation) {
+        console.log('  isEnabled:', window.starsAnimation.isEnabled);
+        console.log('  stars count:', window.starsAnimation.stars.length);
+        console.log('  container:', window.starsAnimation.container);
+        console.log('  container display:', window.starsAnimation.container?.style.display);
+        console.log('  interval ID:', window.starsAnimation.starCreationInterval);
+      }
+      updateInfo();
+    }
+    
+    function clearConsole() {
+      console.clear();
+      console.log('🧪 Console cleared');
+    }
+    
+    function updateInfo() {
+      if (window.starsAnimation) {
+        document.getElementById('info').innerHTML = `
+          Status: ${window.starsAnimation.isEnabled ? 'Enabled' : 'Disabled'}<br>
+          Stars: ${window.starsAnimation.stars.length}<br>
+          Container: ${window.starsAnimation.container ? 'OK' : 'Missing'}<br>
+          Interval: ${window.starsAnimation.starCreationInterval ? 'Running' : 'Stopped'}
+        `;
+      }
+    }
+    
+    // Auto-update info every 2 seconds
+    setInterval(updateInfo, 2000);
+    
+    // Initial update after 1 second
+    setTimeout(updateInfo, 1000);
+  </script>
+</body>
+</html>
