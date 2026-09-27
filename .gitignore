@@ -1,0 +1,24 @@
+# Weavify Distribution Repository .gitignore
+node_modules/
+dist/
+build/
+target/
+*.exe
+*.msi
+*.zip
+*.tar.gz
+*.log
+*.sqlite
+*.db
+.env*
+*.key
+*.pem
+*.pfx
+*.sig
+
+# Scripts
+deploy_release.ps1
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,18 +1,131 @@
+<div align="center">
+
+<img src="assets/logo.png" width="140" alt="Weavify Logo" style="border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
+
 # Weavify Desktop
 
-Music player with YouTube and Yandex.Music support.
+**Премиальный мультисервисный аудиоплеер нового поколения**
 
-## Download
+[![GitHub Release](https://img.shields.io/badge/Версия-8.2.1-8B5CF6?style=for-the-badge&logo=github&logoColor=white)](https://github.com/vans12byvans-hue/weavifyy/releases/latest)
+[![Платформа](https://img.shields.io/badge/Платформа-Windows%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/vans12byvans-hue/weavifyy/releases/latest)
+[![Движок](https://img.shields.io/badge/Движок-Tauri%20v2%20%7C%20Rust-FFC107?style=for-the-badge&logo=tauri&logoColor=black)](https://tauri.app)
+[![Telegram](https://img.shields.io/badge/Telegram-@weavifymusic-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/weavifymusic)
+[![Лицензия](https://img.shields.io/badge/Лицензия-MIT-10B981?style=for-the-badge)](LICENSE)
 
-Download the latest version from [Releases](https://github.com/vans12byvans-hue/weavifyy/releases/latest)
+<br/>
 
-## Features
+[📥 **Скачать Weavify 8.2.1 (Windows x64)**](https://github.com/vans12byvans-hue/weavifyy/releases/latest/download/Weavify_8.2.1_x64-setup.exe) • 
+[📖 Возможности](docs/FEATURES.md) • 
+[🚀 Установка](docs/INSTALLATION.md) • 
+[📜 История версий](CHANGELOG.md) • 
+[💬 Telegram Канал](https://t.me/weavifymusic)
 
-- Search music on YouTube and Yandex.Music
-- Playlists and favorites
-- Discord Rich Presence
-- Auto-update
+</div>
 
-## Version
+---
 
-Current version: 6.7.1
+## 🎧 О проекте
+
+**Weavify** — это современный кроссплатформенный музыкальный клиент, разработанный для тех, кто ценит чистоту звука, эстетику интерфейса и свободу выбора музыкальных сервисов. 
+
+Больше не нужно переключаться между десятками вкладок и приложений: **Яндекс.Музыка**, **SoundCloud** и **YouTube Music** теперь объединены в одном легковесном, быстром и эстетичном приложении на базе **Tauri v2** и **Rust**.
+
+> *«Музыка — это не просто звук. Это атмосфера, в которой ты живешь.»*
+
+---
+
+## ⚡ Ключевые возможности
+
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🌊 «Моя волна»</h3>
+      <p>Бесконечный персональный поток рекомендаций на базе умных нейросетевых алгоритмов. Тонкая настройка по настроению (<i>Бодрое, Спокойное, Грустное, Радостное</i>) и динамический шейдер визуализации баса (<b>Wave Bass Effect</b>).</p>
+    </td>
+    <td width="50%">
+      <h3>⚡ Мультисервисный поиск</h3>
+      <p>Единая поисковая строка и общая медиатека: находите треки, альбомы и плейлисты из <b>Яндекс.Музыки</b>, <b>SoundCloud</b> и <b>YouTube</b> без искусственных барьеров.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🎤 Синхронные тексты (Live Lyrics)</h3>
+      <p>Полноэкранный плеер с кинематографичным отображением караоке-текстов песен в реальном времени. Строки плавно подсвечиваются строго в такт вокалу исполнителя.</p>
+    </td>
+    <td width="50%">
+      <h3>🤖 Weavify AI</h3>
+      <p>Встроенный интеллектуальный ассистент: мгновенный разбор творческого пути артиста, анализ звучания, жанровых оттенков и уникальные факты о треках.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🎚️ Студийный звук & Crossfade</h3>
+      <p>10-полосный эквалайзер с профессиональными пресетами и настраиваемый <b>Crossfade</b> (от 1 до 12 сек) для бесшовного перехода между композициями без пауз.</p>
+    </td>
+    <td width="50%">
+      <h3>🎮 Discord Rich Presence</h3>
+      <p>Интерактивный статус в Discord: друзья увидят, что вы слушаете прямо сейчас, с обложкой релиза, именем артиста и таймкодом.</p>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🚀 Быстрый старт
+
+### 📥 Установка за 3 простых шага:
+
+1. Скачайте актуальный установщик: **[Weavify_8.2.1_x64-setup.exe](https://github.com/vans12byvans-hue/weavifyy/releases/latest/download/Weavify_8.2.1_x64-setup.exe)**.
+2. Запустите файл установки и следуйте указаниям инсталлятора.
+3. Откройте Weavify, выберите любимый источник музыки и наслаждайтесь звучанием!
+
+```text
+📦 Спецификация дистрибутива:
+• Версия:         8.2.1 (Stable)
+• Архитектура:    x64 (64-bit)
+• Тип инсталлятора: NSIS Setup
+• Размер:         ~7.6 MB (ультракомпактный билд)
+• Платформа:      Windows 10 / Windows 11
+```
+
+---
+
+## 🛠️ Архитектура и технологии
+
+В отличие от традиционных плееров на базе Electron, потребляющих сотни мегабайт оперативной памяти, Weavify построен на современном стеке:
+
+- 🦀 **Ядро Rust + Tauri v2**: Обеспечивает минимальное потребление ресурсов системы (~50–80 МБ RAM), мгновенный запуск и аппаратное ускорение UI.
+- 🎨 **Glassmorphism Dark UI**: Глубокая темная тема с динамическим градиентом, мягко адаптирующимся под цвета текущей обложки альбома.
+- 🗄️ **Локальное кэширование**: Высокопроизводительная локальная база данных для мгновенного доступа к избранным трекам и сохраненным альбомам.
+- 🔄 **Автообновление (Tauri Updater)**: Фоновая доставка стабильных релизов с проверкой цифровой подписи.
+
+---
+
+## ⌨️ Горячие клавиши по умолчанию
+
+| Клавиша | Функция |
+|---|---|
+| `Space` / `MediaPlayPause` | Воспроизведение / Пауза |
+| `Ctrl + →` / `MediaNext` | Следующий трек |
+| `Ctrl + ←` / `MediaPrev` | Предыдущий трек |
+| `Ctrl + ↑` / `Ctrl + ↓` | Регулировка громкости |
+| `Ctrl + L` | Полноэкранный текст песни |
+| `Ctrl + F` | Фокус на поиске |
+| `Ctrl + W` | Свернуть в трей |
+
+*Полная таблица комбинаций доступна в [документации по горячим клавишам](docs/SHORTCUTS.md).*
+
+---
+
+## 💬 Сообщество и обратная связь
+
+- 📢 **Telegram-канал проекта**: [@weavifymusic](https://t.me/weavifymusic) — анонсы обновлений, инсайды и общение с разработчиками.
+- 🐞 **Баг-трекер**: Если вы столкнулись с ошибкой или хотите предложить функцию, [создайте Issue](https://github.com/vans12byvans-hue/weavifyy/issues).
+
+---
+
+<div align="center">
+
+Made with ❤️ by **Weavify Team** • 2026
+
+</div>

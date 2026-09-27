@@ -1,0 +1,10 @@
+{
+  "version": "8.2.1",
+  "notes": "Weavify v8.2.1: High-performance audio streaming, AI-powered artist breakdowns, synchronized live lyrics, seamless 'Моя волна' playback, and UI enhancements.",
+  "pub_date": "2026-09-27T12:00:00Z",
+  "platforms": {
+    "windows-x86_64": {
+      "url": "https://github.com/vans12byvans-hue/weavifyy/releases/download/v8.2.1/Weavify_8.2.1_x64-setup.exe"
+    }
+  }
+}
